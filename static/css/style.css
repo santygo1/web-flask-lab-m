@@ -1,0 +1,11 @@
+.input{
+    display: inline-flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.image{
+    width: 200px;
+    height: 100px;
+}

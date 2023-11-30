@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title> Приветствие </title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<form action="{{ url_for('index') }}" method="get" class="input">
+    <label>
+        Имя:
+        <input type=text name=username required>
+    </label>
+    <label>Пол:
+        <input type=radio name=gender value=w checked> Ж
+        <input type=radio name=gender value=m> M
+    </label>
+    <label>
+        Образовательная программа:
+        <select name=program>
+            {% for program in program_list %}
+                <option value={{ loop.index0 }}>{{ program }}</option>
+            {% endfor %}
+        </select>
+    </label>
+
+    <label>
+        Выберите дисциплины, которые Вы изучаете:<br>
+        {% for subject in subject_list %}
+            <input type=checkbox name=subject[] value={{ loop.index0 }}>
+            {{ subject }}<br>
+        {% endfor %}
+    </label>
+
+    <p><input type=submit value=Отправить></p>
+</form>
+
+{% if name != "" %}
+    <div class="hello">
+        <p>
+            Привет,
+            {% if gender == "m" %}
+                студент
+            {% elif gender == "w" %}
+                студентка
+            {% endif %}
+            {{ name }}!
+        </p>
+        <p>
+            Ваша образовательная программа: {{ program }}.
+        </p>
+        <p>
+            {% if subjects_select| length %}
+                Вы изучаете дисциплины:
+                {% for sub in subjects_select %}
+                    <a href="{{ url_for('subject', sub = sub) }}">{{ sub }}</a>{% if loop.last %}.{% else %},
+                {% endif %}
+                {% endfor %}
+            {% else %}
+                Вы не изучаете никаких дисциплин
+            {% endif %}
+        </p>
+    </div>
+{% endif %}
+
+</body>
+</html>
